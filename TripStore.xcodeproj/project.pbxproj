@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D9DF531C305965A200B55CA9 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D9DF531B305965A200B55CA9 /* Kingfisher */; };
+		D9DF531F305965E900B55CA9 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = D9DF531E305965E900B55CA9 /* SkeletonUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D94466CC3058BC8E009DCDF0 /* TripStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9DF531C305965A200B55CA9 /* Kingfisher in Frameworks */,
+				D9DF531F305965E900B55CA9 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = TripStore;
 			packageProductDependencies = (
+				D9DF531B305965A200B55CA9 /* Kingfisher */,
+				D9DF531E305965E900B55CA9 /* SkeletonUI */,
 			);
 			productName = TripStore;
 			productReference = D94466CC3058BC8E009DCDF0 /* TripStore.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = D94466C33058BC8E009DCDF0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D9DF531A305965A200B55CA9 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				D9DF531D305965E900B55CA9 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D94466CD3058BC8E009DCDF0 /* Products */;
 			projectDirPath = "";
@@ -261,6 +274,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -293,6 +307,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,6 +347,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D9DF531A305965A200B55CA9 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.12.0;
+			};
+		};
+		D9DF531D305965E900B55CA9 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D9DF531B305965A200B55CA9 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9DF531A305965A200B55CA9 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		D9DF531E305965E900B55CA9 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9DF531D305965E900B55CA9 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D94466C43058BC8E009DCDF0 /* Project object */;
 }
