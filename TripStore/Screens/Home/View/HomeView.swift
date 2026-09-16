@@ -26,8 +26,14 @@ struct HomeView: View {
 
             content
         }
+        .navigationTitle("🛍️ Trip Store")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarColorScheme(.dark, for: .navigationBar)
         .onAppear {
             viewModel.loadInitial()
+        }
+        .navigationDestination(for: Product.self) { product in
+            ProductDetailsView(viewModel: ProductDetailsViewModel(product: product))
         }
     }
 
@@ -87,23 +93,25 @@ struct HomeView: View {
                 
             }
             .padding(.horizontal)
-            .padding(.vertical, 10)
+            .padding(.bottom, 10)
         }
     }
 
     private var productGrid: some View {
-
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(viewModel.products) { product in
-                    ProductCardView(product: product)
-                        .onAppear {
-                            viewModel.loadNextPageIfNeeded(currentItem: product)
-                        }
+                    NavigationLink(value: product) {
+                        ProductCardView(product: product)
+                            .onAppear {
+                                viewModel.loadNextPageIfNeeded(currentItem: product)
+                            }
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding()
-            
+
             if viewModel.isLoadingNextPage {
                 ProgressView()
                     .padding(.vertical, 12)
@@ -113,7 +121,6 @@ struct HomeView: View {
         .refreshable {
             viewModel.refresh()
         }
-        
     }
 
     private var emptyStateView: some View {
