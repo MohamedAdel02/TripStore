@@ -47,7 +47,7 @@ struct HomeView: View {
             case .loading:
                 skeletonGrid
                 
-            case .empty:
+            case .empty, .idle:
                 emptyStateView
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 

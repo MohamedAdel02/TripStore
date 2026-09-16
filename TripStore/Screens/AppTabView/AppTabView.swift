@@ -22,14 +22,14 @@ struct AppTabView: View {
             }
 
             NavigationStack {
-                //SearchView()
+                //SearchView(viewModel: SearchViewModel())
             }
             .tabItem {
                 Label("Search", systemImage: "magnifyingglass")
             }
 
             NavigationStack {
-                //ProfileView()
+                ProfileView(viewModel: ProfileViewModel())
             }
             .tabItem {
                 Label("Profile", systemImage: "person")

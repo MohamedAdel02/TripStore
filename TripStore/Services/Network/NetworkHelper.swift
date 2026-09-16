@@ -71,7 +71,7 @@ enum ProductEndpoint {
     case search(query: String, paging: ProductQuery = ProductQuery())
     case categories
     case categoryList
-    case byCategory(slug: String, paging: ProductQuery = ProductQuery())
+    case byCategory(id: String, paging: ProductQuery = ProductQuery())
 
     private var environment: APIEnvironment { .production }
 

@@ -179,9 +179,9 @@ struct ProductDetailsView: View {
             .accessibilityElement(children: .combine)
             .accessibilityLabel("Total \(viewModel.formattedTotalPrice)")
 
-            Button {
-                
-                
+            NavigationLink {
+
+                OrderConfirmationView(product: viewModel.product, quantity: viewModel.quantity)
             } label: {
                 Text(viewModel.isOutOfStock ? "Out of Stock" : "Add to Order")
                     .font(.headline)

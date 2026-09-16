@@ -29,7 +29,7 @@ class HomeRepository: HomeRepositoryProtocol {
 
     func fetchProducts(category: String, limit: Int, skip: Int) async throws -> ProductsResponse {
         let query = ProductQuery(limit: limit, skip: skip)
-        let request = try ProductEndpoint.byCategory(slug: category, paging: query).asHTTPRequest()
+        let request = try ProductEndpoint.byCategory(id: category, paging: query).asHTTPRequest()
         return try await networkManager.send(request, as: ProductsResponse.self)
     }
 

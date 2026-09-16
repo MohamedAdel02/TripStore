@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9D4AEB2305B4CB200FD37AA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D9D4AEB1305B4CB200FD37AA /* RealmSwift */; };
 		D9DF531C305965A200B55CA9 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D9DF531B305965A200B55CA9 /* Kingfisher */; };
 		D9DF531F305965E900B55CA9 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = D9DF531E305965E900B55CA9 /* SkeletonUI */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9D4AEB2305B4CB200FD37AA /* RealmSwift in Frameworks */,
 				D9DF531C305965A200B55CA9 /* Kingfisher in Frameworks */,
 				D9DF531F305965E900B55CA9 /* SkeletonUI in Frameworks */,
 			);
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				D9DF531B305965A200B55CA9 /* Kingfisher */,
 				D9DF531E305965E900B55CA9 /* SkeletonUI */,
+				D9D4AEB1305B4CB200FD37AA /* RealmSwift */,
 			);
 			productName = TripStore;
 			productReference = D94466CC3058BC8E009DCDF0 /* TripStore.app */;
@@ -106,6 +109,7 @@
 			packageReferences = (
 				D9DF531A305965A200B55CA9 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D9DF531D305965E900B55CA9 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				D9D4AEAE305B4CB200FD37AA /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D94466CD3058BC8E009DCDF0 /* Products */;
@@ -349,6 +353,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D9D4AEAE305B4CB200FD37AA /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = community;
+				kind = branch;
+			};
+		};
 		D9DF531A305965A200B55CA9 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -368,6 +380,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D9D4AEB1305B4CB200FD37AA /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9D4AEAE305B4CB200FD37AA /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		D9DF531B305965A200B55CA9 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D9DF531A305965A200B55CA9 /* XCRemoteSwiftPackageReference "Kingfisher" */;
