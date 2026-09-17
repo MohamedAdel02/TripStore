@@ -9,12 +9,16 @@ import Foundation
 import Combine
 
 @MainActor
-final class ProfileViewModel: ObservableObject {
+class ProfileViewModel: ObservableObject {
 
     @Published var favoriteCount = 0
     @Published var orderCount = 0
 
-    func load() {
+    private let favoritesRepository = FavoritesRepository()
+    private let ordersRepository = OrderHistoryRepository()
 
+    func load() {
+        favoriteCount = favoritesRepository.count()
+        orderCount = ordersRepository.count()
     }
 }

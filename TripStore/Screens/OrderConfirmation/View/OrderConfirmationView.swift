@@ -10,14 +10,12 @@ import Kingfisher
 
 struct OrderConfirmationView: View {
 
+    @Environment(\.showToast) private var showToast
+    @Environment(\.returnToHome) private var returnToHome
     @StateObject private var viewModel: OrderConfirmationViewModel
 
     init(product: Product, quantity: Int) {
-        _viewModel = StateObject(
-            wrappedValue: OrderConfirmationViewModel(
-                product: product,
-                quantity: quantity
-            )
+        _viewModel = StateObject(wrappedValue: OrderConfirmationViewModel(product: product,quantity: quantity)
         )
     }
 
@@ -35,6 +33,13 @@ struct OrderConfirmationView: View {
 
                     summarySection
 
+                    if let confirmationError = viewModel.confirmationError {
+                        Text(confirmationError)
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+
                     confirmationButton
                 }
                 .padding()
@@ -43,6 +48,11 @@ struct OrderConfirmationView: View {
         .navigationTitle("Confirm Order")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .onChange(of: viewModel.didConfirm) { didConfirm in
+            guard didConfirm else { return }
+            showToast(.success("Order placed successfully"), placement: .top)
+            returnToHome()
+        }
     }
 
     // MARK: - Product
@@ -93,11 +103,14 @@ struct OrderConfirmationView: View {
     }
 
     private var productImage: some View {
-        Group {
+        ZStack {
+            Color.white.opacity(0.06)
+
             if let url = viewModel.productImageURL {
                 KFImage(url)
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
+                    .padding(8)
             } else {
                 Image(systemName: "photo")
                     .font(.title2)
@@ -105,7 +118,6 @@ struct OrderConfirmationView: View {
             }
         }
         .frame(width: 80, height: 80)
-        .background(Color.customGray.opacity(0.5))
         .clipShape(
             RoundedRectangle(
                 cornerRadius: 12,
@@ -147,10 +159,7 @@ struct OrderConfirmationView: View {
         }
     }
 
-    private func summaryRow(
-        title: String,
-        value: String
-    ) -> some View {
+    private func summaryRow(title: String,value: String) -> some View {
         HStack {
             Text(title)
                 .foregroundStyle(.customGray.opacity(0.8))
@@ -174,12 +183,16 @@ struct OrderConfirmationView: View {
             HStack(spacing: 8) {
                 if viewModel.isConfirming {
                     ProgressView()
+                        .progressViewStyle(.circular)
                         .tint(.white)
+                        .scaleEffect(0.9)
                 }
 
                 Text(
                     viewModel.isConfirming
                     ? "Confirming..."
+                    : viewModel.didConfirm
+                    ? "Order Confirmed"
                     : "Confirm Order"
                 )
                 .font(.headline)
@@ -189,7 +202,7 @@ struct OrderConfirmationView: View {
             .frame(height: 50)
             .foregroundStyle(.white)
             .background(
-                viewModel.isConfirming
+                (viewModel.isConfirming || viewModel.didConfirm)
                 ? Color.accentColor.opacity(0.6)
                 : Color.accentColor
             )
@@ -201,7 +214,8 @@ struct OrderConfirmationView: View {
             )
         }
         .buttonStyle(.plain)
-        .disabled(viewModel.isConfirming)
+        .disabled(viewModel.isConfirming || viewModel.didConfirm)
+        .accessibilityLabel("Confirm order")
     }
 }
 

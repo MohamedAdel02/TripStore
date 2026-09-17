@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct HomeView: View {
 
@@ -30,10 +31,8 @@ struct HomeView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .onAppear {
+            UIRefreshControl.appearance().tintColor = .white
             viewModel.loadInitial()
-        }
-        .navigationDestination(for: Product.self) { product in
-            ProductDetailsView(viewModel: ProductDetailsViewModel(product: product))
         }
     }
 
@@ -59,10 +58,13 @@ struct HomeView: View {
                 productGrid
             }
         }
+        .tint(.white)
+        .refreshable {
+            await viewModel.refresh()
+        }
     }
 
     private var skeletonGrid: some View {
-
         ScrollView {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(0..<8, id: \.self) { _ in
@@ -101,7 +103,7 @@ struct HomeView: View {
         ScrollView(showsIndicators: false) {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(viewModel.products) { product in
-                    NavigationLink(value: product) {
+                    NavigationLink(value: AppRoute.product(product)) {
                         ProductCardView(product: product)
                             .onAppear {
                                 viewModel.loadNextPageIfNeeded(currentItem: product)
@@ -114,12 +116,11 @@ struct HomeView: View {
 
             if viewModel.isLoadingNextPage {
                 ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(.white)
                     .padding(.vertical, 12)
                     .accessibilityLabel("Loading more products")
             }
-        }
-        .refreshable {
-            viewModel.refresh()
         }
     }
 
@@ -148,7 +149,9 @@ struct HomeView: View {
 
             if error.isRetryable {
                 Button("Retry") {
-                    viewModel.refresh()
+                    Task {
+                        await viewModel.refresh()
+                    }
                 }
                 .buttonStyle(.borderedProminent)
             }

@@ -16,12 +16,12 @@ class HomeViewModel: ObservableObject {
     @Published var selectedCategory: Category?
     @Published var state: ViewState = .loading
     @Published var isLoadingNextPage = false
-    @Published var isRefreshing = false
 
     private let useCase: HomeUseCaseProtocol
     private var hasMorePages = true
     private var totalAvailable = 0
     private let pageSize = 20
+    private let minimumLoadingDuration: Duration = .milliseconds(750)
     private var nextSkip = 0
 
     private var loadTask: Task<Void, Never>?
@@ -33,17 +33,17 @@ class HomeViewModel: ObservableObject {
     func loadInitial() {
         guard products.isEmpty else { return }
         loadCategoriesIfNeeded()
-        startLoad()
+        startLoad(useMinimumLoadingDuration: true)
     }
 
-    func refresh() {
-        startLoad()
+    func refresh() async {
+        await startLoadAndWait(useMinimumLoadingDuration: true)
     }
 
     func selectCategory(_ category: Category?) {
         guard category != selectedCategory else { return }
         selectedCategory = category
-        startLoad()
+        startLoad(useMinimumLoadingDuration: false)
     }
 
     private func loadCategoriesIfNeeded() {
@@ -52,7 +52,7 @@ class HomeViewModel: ObservableObject {
             do {
                 categories = try await useCase.loadCategories()
             } catch {
-                
+
             }
         }
     }
@@ -80,27 +80,50 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    private func startLoad() {
-
+    private func startLoad(useMinimumLoadingDuration: Bool) {
         loadTask?.cancel()
+        loadTask = Task {
+            await performLoad(useMinimumLoadingDuration: useMinimumLoadingDuration)
+        }
+    }
+
+    private func startLoadAndWait(useMinimumLoadingDuration: Bool) async {
+        loadTask?.cancel()
+        let task = Task {
+            await performLoad(useMinimumLoadingDuration: useMinimumLoadingDuration)
+        }
+        loadTask = task
+        await task.value
+    }
+
+    private func performLoad(useMinimumLoadingDuration: Bool) async {
         state = .loading
         nextSkip = 0
         hasMorePages = true
 
-        loadTask = Task {
-            
-            do {
-                let response = try await fetchPage(skip: 0)
-                guard !Task.isCancelled else { return }
-                apply(response, replacing: true)
+        let startedAt = ContinuousClock.now
 
-            } catch is CancellationError {
-
-            } catch {
-                guard !Task.isCancelled else { return }
-                state = .error(mapError(error))
+        do {
+            let response = try await fetchPage(skip: 0)
+            if useMinimumLoadingDuration {
+                try await waitForMinimumLoadingDuration(since: startedAt)
             }
+            guard !Task.isCancelled else { return }
+            apply(response, replacing: true)
+
+        } catch is CancellationError {
+
+        } catch {
+            guard !Task.isCancelled else { return }
+            state = .error(mapError(error))
         }
+    }
+
+    private func waitForMinimumLoadingDuration(since startedAt: ContinuousClock.Instant) async throws {
+        let elapsed = ContinuousClock.now - startedAt
+        let remaining = minimumLoadingDuration - elapsed
+        guard remaining > .zero else { return }
+        try await Task.sleep(for: remaining)
     }
 
     private func fetchPage(skip: Int) async throws -> ProductsResponse {

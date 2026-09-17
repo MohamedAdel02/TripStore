@@ -9,14 +9,16 @@ import Foundation
 import Combine
 
 @MainActor
-final class OrderConfirmationViewModel: ObservableObject {
+class OrderConfirmationViewModel: ObservableObject {
 
     let product: Product
     let quantity: Int
 
-    @Published private(set) var isConfirming = false
+    @Published var isConfirming = false
+    @Published var didConfirm = false
+    @Published var confirmationError: String?
 
-    private let serviceFeePercentage = 0.05
+    private let repository = OrderHistoryRepository()
 
     init(product: Product, quantity: Int) {
         self.product = product
@@ -24,15 +26,15 @@ final class OrderConfirmationViewModel: ObservableObject {
     }
 
     var subtotal: Double {
-        product.price * Double(quantity)
+        PriceMath.subtotal(unitPrice: product.price, quantity: quantity)
     }
 
     var serviceFee: Double {
-        subtotal * serviceFeePercentage
+        PriceMath.serviceFee(forSubtotal: subtotal)
     }
 
     var total: Double {
-        subtotal + serviceFee
+        PriceMath.total(subtotal: subtotal, serviceFee: serviceFee)
     }
 
     var formattedSubtotal: String {
@@ -48,17 +50,34 @@ final class OrderConfirmationViewModel: ObservableObject {
     }
 
     func confirmOrder() async {
-        guard !isConfirming else { return }
+        guard !isConfirming, !didConfirm else { return }
 
         isConfirming = true
+        confirmationError = nil
 
-        // Future:
-        // 1. Create Order
-        // 2. Persist it locally
-        // 3. Clear/reset the order flow
+        let order = Order(
+            id: UUID().uuidString,
+            createdAt: Date(),
+            productId: product.id,
+            productTitle: product.title,
+            productThumbnail: product.thumbnail,
+            productCategory: product.category,
+            unitPrice: product.price,
+            quantity: quantity,
+            subtotal: subtotal,
+            serviceFee: serviceFee,
+            total: total
+        )
 
-        // Temporary delay to simulate confirmation.
-        try? await Task.sleep(for: .milliseconds(500))
+        do {
+            try await Task.sleep(for: .seconds(1.5))
+            try repository.save(order)
+            didConfirm = true
+        } catch is CancellationError {
+            // Ignore cancelled confirmation work.
+        } catch {
+            confirmationError = "Could not save your order. Please try again."
+        }
 
         isConfirming = false
     }

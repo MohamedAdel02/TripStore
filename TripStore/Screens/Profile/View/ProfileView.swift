@@ -14,7 +14,7 @@ struct ProfileView: View {
     init(viewModel: ProfileViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         ZStack {
             AppBackground()
@@ -74,29 +74,33 @@ struct ProfileView: View {
 
             VStack(spacing: 0) {
 
-                NavigationLink {
-                    FavoritesView()
-                } label: {
-                    profileRow(icon: "heart.fill", title: "Favorites")
+                NavigationLink(value: AppRoute.favorites) {
+                    profileRow(
+                        icon: "heart.fill",
+                        title: "Favorites",
+                        badge: viewModel.favoriteCount
+                    )
                 }
                 .buttonStyle(.plain)
 
                 divider
 
-                NavigationLink {
-                    OrderHistoryView()
-                } label: {
-                    profileRow(icon: "clock.arrow.circlepath", title: "Order History")
+                NavigationLink(value: AppRoute.orderHistory) {
+                    profileRow(
+                        icon: "clock.arrow.circlepath",
+                        title: "Order History",
+                        badge: viewModel.orderCount
+                    )
                 }
                 .buttonStyle(.plain)
             }
-            .background(.customGray.opacity(0.1), in: RoundedRectangle(cornerRadius: 16,style: .continuous))
+            .background(.customGray.opacity(0.1), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
         .padding(.horizontal)
     }
 
 
-    private func profileRow(icon: String, title: String) -> some View {
+    private func profileRow(icon: String, title: String, badge: Int) -> some View {
         HStack(spacing: 14) {
 
             Image(systemName: icon)
@@ -109,6 +113,16 @@ struct ProfileView: View {
                 .foregroundStyle(.white)
 
             Spacer()
+
+            if badge > 0 {
+                Text("\(badge)")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.accentColor.opacity(0.8), in: Capsule())
+                    .accessibilityLabel("\(badge) items")
+            }
 
             Image(systemName: "chevron.right")
                 .font(.system(size: 12, weight: .semibold))
@@ -125,9 +139,3 @@ struct ProfileView: View {
             .background(.white.opacity(0.08))
     }
 }
-
-//#Preview {
-//    NavigationStack {
-//        ProfileView()
-//    }
-//}

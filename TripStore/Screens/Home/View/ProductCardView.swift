@@ -69,7 +69,9 @@ struct ProductCardView: View {
     }
 
     private var thumbnail: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
+            Color.white.opacity(0.06)
+
             if isLoading {
                 Rectangle()
                     .addSkelton(isLoading)
@@ -82,11 +84,22 @@ struct ProductCardView: View {
                     .onSuccess { _ in isImageLoading = false }
                     .onFailure { _ in isImageLoading = false }
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
+                    .padding(10)
                     .opacity(isImageLoading ? 0 : 1)
+
+                if product.stock <= 0 {
+                    Text("Out of Stock")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 5)
+                        .background(Color.black.opacity(0.55))
+                        .accessibilityHidden(true)
+                }
             }
         }
-        .frame(height: 120)
+        .frame(height: 140)
         .frame(maxWidth: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
@@ -112,7 +125,11 @@ struct ProductCardView: View {
     }
 
     private var accessibilityDescription: String {
-        "\(displayProduct.title), \(displayProduct.category), rated \(String(format: "%.1f", displayProduct.rating)) out of 5, \(priceText)"
+        var description = "\(displayProduct.title), \(displayProduct.category), rated \(String(format: "%.1f", displayProduct.rating)) out of 5, \(priceText)"
+        if !isLoading, displayProduct.stock <= 0 {
+            description += ", out of stock"
+        }
+        return description
     }
 }
 

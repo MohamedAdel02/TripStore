@@ -14,20 +14,23 @@ class ProductDetailsViewModel: ObservableObject {
     let product: Product
 
     @Published var quantity: Int = 1
+    @Published var isFavorite = false
+
+    private let favoritesRepository = FavoritesRepository()
 
     init(product: Product) {
         self.product = product
+        refreshFavoriteState()
     }
 
     var galleryURLs: [URL] {
         let sources = (product.images?.isEmpty == false)
-            ? product.images!
+            ? (product.images ?? [product.thumbnail])
             : [product.thumbnail]
-        
-        // not every string a valid URL (compat map)
+
         return sources.compactMap(URL.init(string:))
     }
-    
+
     var isOutOfStock: Bool {
         product.stock <= 0
     }
@@ -49,12 +52,23 @@ class ProductDetailsViewModel: ObservableObject {
     }
 
     var totalPrice: Double {
-        let rawTotal = product.price * Double(quantity)
-        return (rawTotal * 100).rounded() / 100
+        PriceMath.subtotal(unitPrice: product.price, quantity: quantity)
     }
 
     var formattedTotalPrice: String {
         totalPrice.formatted(.currency(code: "USD"))
+    }
+
+    func refreshFavoriteState() {
+        isFavorite = favoritesRepository.isFavorite(product.id)
+    }
+
+    func toggleFavorite() {
+        do {
+            isFavorite = try favoritesRepository.toggle(product)
+        } catch {
+            refreshFavoriteState()
+        }
     }
 
     func increment() {

@@ -45,6 +45,20 @@ struct ProductDetailsView: View {
         .navigationTitle(viewModel.product.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.toggleFavorite()
+                } label: {
+                    Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
+                        .foregroundStyle(viewModel.isFavorite ? .red : .white)
+                }
+                .accessibilityLabel(viewModel.isFavorite ? "Remove from favorites" : "Add to favorites")
+            }
+        }
+        .onAppear {
+            viewModel.refreshFavoriteState()
+        }
     }
 
     private var imageGallery: some View {
@@ -179,21 +193,31 @@ struct ProductDetailsView: View {
             .accessibilityElement(children: .combine)
             .accessibilityLabel("Total \(viewModel.formattedTotalPrice)")
 
-            NavigationLink {
-
-                OrderConfirmationView(product: viewModel.product, quantity: viewModel.quantity)
-            } label: {
-                Text(viewModel.isOutOfStock ? "Out of Stock" : "Add to Order")
+            if viewModel.canOrder {
+                NavigationLink(value: AppRoute.orderConfirmation(viewModel.product, viewModel.quantity)
+                ) {
+                    Text("Add to Order")
+                        .font(.headline)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .foregroundStyle(.white)
+                        .background(Color.accentColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Add to Order")
+            } else {
+                Text("Out of Stock")
                     .font(.headline)
                     .bold()
                     .frame(maxWidth: .infinity)
                     .frame(height: 45)
-                    .foregroundStyle(viewModel.canOrder ? .white : .white.opacity(0.8))
-                    .background(viewModel.canOrder ? Color.accentColor : Color.white.opacity(0.4))
+                    .foregroundStyle(.white.opacity(0.85))
+                    .background(Color.white.opacity(0.25))
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .accessibilityLabel("Out of Stock")
             }
-            .buttonStyle(.plain)
-            .disabled(!viewModel.canOrder)
         }
     }
 }
