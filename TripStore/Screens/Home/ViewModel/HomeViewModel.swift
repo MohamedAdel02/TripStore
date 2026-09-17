@@ -37,6 +37,7 @@ class HomeViewModel: ObservableObject {
     }
 
     func refresh() async {
+        loadCategoriesIfNeeded()
         await startLoadAndWait(useMinimumLoadingDuration: true)
     }
 
@@ -47,12 +48,14 @@ class HomeViewModel: ObservableObject {
     }
 
     private func loadCategoriesIfNeeded() {
-        guard categories.isEmpty else { return }
         Task {
             do {
-                categories = try await useCase.loadCategories()
+                let fetched = try await useCase.loadCategories()
+                if !fetched.isEmpty {
+                    self.categories = fetched
+                }
             } catch {
-
+                // Silently ignore category failures in offline mode
             }
         }
     }
@@ -76,7 +79,7 @@ class HomeViewModel: ObservableObject {
             let response = try await fetchPage(skip: nextSkip)
             apply(response, replacing: false)
         } catch {
-
+            // Silently keep existing pagination when offline
         }
     }
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+public import Realm
 
 nonisolated class OrderObject: Object {
     @Persisted(primaryKey: true) var id = ""

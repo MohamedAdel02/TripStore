@@ -1,5 +1,5 @@
 //
-//  FavoriteObject.swift
+//  ProductObject.swift
 //  TripStore
 //
 //  Created by Mohamed Adel on 17/09/2026.
@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 public import Realm
 
-nonisolated class FavoriteObject: Object {
-    @Persisted(primaryKey: true) var productId = 0
+nonisolated class ProductObject: Object {
+    @Persisted(primaryKey: true) var id = 0
     @Persisted var title = ""
     @Persisted var productDescription: String?
     @Persisted var category = ""
@@ -25,7 +25,7 @@ nonisolated class FavoriteObject: Object {
 
     convenience init(_ product: Product) {
         self.init()
-        productId = product.id
+        id = product.id
         title = product.title
         productDescription = product.description
         category = product.category
@@ -40,7 +40,7 @@ nonisolated class FavoriteObject: Object {
 
     var asProduct: Product {
         Product(
-            id: productId,
+            id: id,
             title: title.isEmpty ? "Unknown product" : title,
             description: productDescription,
             category: category.isEmpty ? "uncategorized" : category,
