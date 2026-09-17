@@ -25,7 +25,7 @@ struct AppTabView: View {
             .tag(AppTab.home)
 
             NavigationStack {
-                //SearchView(viewModel: SearchViewModel())
+                SearchView(viewModel: SearchViewModel())
             }
             .tabItem {
                 Label("Search", systemImage: "magnifyingglass")
