@@ -1,4 +1,3 @@
-# TripStore — E-Commerce iOS Application
 
 An iOS e-commerce app built with SwiftUI that lets users browse products, search with real-time filtering, save favorites, and place local orders with automatic tax and fee calculations. Built using Clean Architecture and the DummyJSON API, it features full offline support, local Realm storage, and complete VoiceOver accessibility.
 
@@ -6,17 +5,28 @@ An iOS e-commerce app built with SwiftUI that lets users browse products, search
 
 ## 📹 Video Walkthrough
 
-> **Watch the full application walkthrough:**
+> Watch the application in action:
 
-* **App Walkthrough:** 
+* **App Walkthrough (Part 1):**
+
+https://github.com/user-attachments/assets/05a4b233-bf41-4472-8de5-733b14c421fd
+
+* **App Walkthrough (Part 2):**
+
+https://github.com/user-attachments/assets/0e298ec0-fc33-4ee9-85d1-5e237f6f1a3c
 
 ---
 
+
 ## 📱 Visual Showcase
 
-| Catalogue & Home | Search & Filters | Product Details | Order Confirmation |
-| :---: | :---: | :---: | :---: |
-| <img src="https://via.placeholder.com/300x600.png?text=Catalogue+Screen" width="220" alt="Catalogue Screen"/> | <img src="https://via.placeholder.com/300x600.png?text=Search+Screen" width="220" alt="Search Screen"/> | <img src="https://via.placeholder.com/300x600.png?text=Product+Details" width="220" alt="Product Details"/> | <img src="https://via.placeholder.com/300x600.png?text=Order+Flow" width="220" alt="Order Flow"/> |
+| Catalogue & Home | Search & Filters | Product Details |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/4355fde9-0068-46d0-8266-7f2c4d90af79" width="200" alt="Catalogue & Home" loading="lazy" /> | <img src="https://github.com/user-attachments/assets/50c3398f-1c5e-41fa-91d4-928163051ca2" width="200" alt="Search & Filters" loading="lazy" /> | <img src="https://github.com/user-attachments/assets/b0a97be6-27c4-42ea-9479-c8fd3527f52f" width="200" alt="Product Details" loading="lazy" /> |
+
+| Profile | Favorites | Order History |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/ab10f8bf-3ba9-4e25-abc5-247c41957fe4" width="200" alt="Profile" loading="lazy" /> | <img src="https://github.com/user-attachments/assets/8c3865d8-3fbc-47b3-8682-24dc6e0a6503" width="200" alt="Favorites" loading="lazy" /> | <img src="https://github.com/user-attachments/assets/395d799e-8762-4902-b0bf-0cd972c19dd3" width="200" alt="Order History" loading="lazy" /> |
 
 ---
 
