@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class OrderObject: Object {
+nonisolated class OrderObject: Object {
     @Persisted(primaryKey: true) var id = ""
     @Persisted var createdAt = Date()
     @Persisted var productId = 0

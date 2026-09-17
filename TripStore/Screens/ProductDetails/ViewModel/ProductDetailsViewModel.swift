@@ -20,7 +20,6 @@ class ProductDetailsViewModel: ObservableObject {
 
     init(product: Product) {
         self.product = product
-        refreshFavoriteState()
     }
 
     var galleryURLs: [URL] {

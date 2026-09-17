@@ -12,14 +12,30 @@
 		D9DF531F305965E900B55CA9 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = D9DF531E305965E900B55CA9 /* SkeletonUI */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D95539ED305BDEFC00D6030D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D94466C43058BC8E009DCDF0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D94466CB3058BC8E009DCDF0;
+			remoteInfo = TripStore;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		D94466CC3058BC8E009DCDF0 /* TripStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D95539E9305BDEFC00D6030D /* TripStoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripStoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D94466CE3058BC8E009DCDF0 /* TripStore */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TripStore;
+			sourceTree = "<group>";
+		};
+		D95539EA305BDEFC00D6030D /* TripStoreTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TripStoreTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -35,6 +51,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D95539E6305BDEFC00D6030D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -42,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				D94466CE3058BC8E009DCDF0 /* TripStore */,
+				D95539EA305BDEFC00D6030D /* TripStoreTests */,
 				D94466CD3058BC8E009DCDF0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				D94466CC3058BC8E009DCDF0 /* TripStore.app */,
+				D95539E9305BDEFC00D6030D /* TripStoreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +107,29 @@
 			productReference = D94466CC3058BC8E009DCDF0 /* TripStore.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D95539E8305BDEFC00D6030D /* TripStoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D95539F1305BDEFC00D6030D /* Build configuration list for PBXNativeTarget "TripStoreTests" */;
+			buildPhases = (
+				D95539E5305BDEFC00D6030D /* Sources */,
+				D95539E6305BDEFC00D6030D /* Frameworks */,
+				D95539E7305BDEFC00D6030D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D95539EE305BDEFC00D6030D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D95539EA305BDEFC00D6030D /* TripStoreTests */,
+			);
+			name = TripStoreTests;
+			packageProductDependencies = (
+			);
+			productName = TripStoreTests;
+			productReference = D95539E9305BDEFC00D6030D /* TripStoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -94,6 +142,10 @@
 				TargetAttributes = {
 					D94466CB3058BC8E009DCDF0 = {
 						CreatedOnToolsVersion = 26.6;
+					};
+					D95539E8305BDEFC00D6030D = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = D94466CB3058BC8E009DCDF0;
 					};
 				};
 			};
@@ -117,12 +169,20 @@
 			projectRoot = "";
 			targets = (
 				D94466CB3058BC8E009DCDF0 /* TripStore */,
+				D95539E8305BDEFC00D6030D /* TripStoreTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D94466CA3058BC8E009DCDF0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D95539E7305BDEFC00D6030D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -139,7 +199,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D95539E5305BDEFC00D6030D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D95539EE305BDEFC00D6030D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D94466CB3058BC8E009DCDF0 /* TripStore */;
+			targetProxy = D95539ED305BDEFC00D6030D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D94466D53058BC8F009DCDF0 /* Debug */ = {
@@ -329,6 +404,50 @@
 			};
 			name = Release;
 		};
+		D95539EF305BDEFC00D6030D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G6DT9T8S6A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.badr.TripStoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripStore.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TripStore";
+			};
+			name = Debug;
+		};
+		D95539F0305BDEFC00D6030D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G6DT9T8S6A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.badr.TripStoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripStore.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TripStore";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -346,6 +465,15 @@
 			buildConfigurations = (
 				D94466D83058BC8F009DCDF0 /* Debug */,
 				D94466D93058BC8F009DCDF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D95539F1305BDEFC00D6030D /* Build configuration list for PBXNativeTarget "TripStoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D95539EF305BDEFC00D6030D /* Debug */,
+				D95539F0305BDEFC00D6030D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

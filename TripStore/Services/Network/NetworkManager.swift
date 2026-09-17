@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NetworkManager {
+nonisolated class NetworkManager {
 
     private let session: URLSession
     private let decoder: JSONDecoder

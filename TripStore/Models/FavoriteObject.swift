@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class FavoriteObject: Object {
+nonisolated class FavoriteObject: Object {
     @Persisted(primaryKey: true) var productId = 0
     @Persisted var title = ""
     @Persisted var productDescription: String?

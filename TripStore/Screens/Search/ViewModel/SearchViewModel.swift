@@ -67,6 +67,7 @@ class SearchViewModel: ObservableObject {
 
     private var debounceTask: Task<Void, Never>?
     private var searchTask: Task<Void, Never>?
+    private var searchGeneration = 0
 
     init(useCase: SearchUseCaseProtocol? = nil) {
         self.useCase = useCase ?? SearchUseCase()
@@ -111,6 +112,8 @@ class SearchViewModel: ObservableObject {
     private func reload() {
         debounceTask?.cancel()
         searchTask?.cancel()
+        searchGeneration += 1
+        let generation = searchGeneration
 
         let criteria = currentCriteria
         let trimmedQuery = criteria.query.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -131,14 +134,19 @@ class SearchViewModel: ObservableObject {
         searchTask = Task {
             do {
                 let result = try await useCase.search(criteria: criteria)
-                guard !Task.isCancelled else { return }
+                guard generation == searchGeneration else { return }
                 if let categories = result.availableCategories {
                     availableCategories = categories
                 }
                 products = result.products
                 state = result.products.isEmpty ? .empty : .loaded
+            } catch is CancellationError {
+                return
             } catch {
-                guard !Task.isCancelled else { return }
+                guard generation == searchGeneration else { return }
+                if let networkError = error as? NetworkError, case .cancelled = networkError {
+                    return
+                }
                 state = .error((error as? NetworkError) ?? .unknown(error.localizedDescription))
             }
         }

@@ -29,9 +29,6 @@ class OrderHistoryRepository {
     }
 
     private func realm() throws -> Realm {
-        try Realm(configuration: Realm.Configuration(
-            schemaVersion: 1,
-            deleteRealmIfMigrationNeeded: true
-        ))
+        try RealmStore.realm()
     }
 }
